@@ -31,7 +31,7 @@ RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
 
 #Copiamos el script para interactuar con redis desde bash
 COPY redi.sh /usr/local/sbin/redi
-chmod +x /usr/local/sbin/redi
+RUN chmod +x /usr/local/sbin/redi
 
 #exponemos puertos
 EXPOSE 6379
