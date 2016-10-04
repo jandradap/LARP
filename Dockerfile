@@ -1,18 +1,20 @@
 FROM ubuntu
 MAINTAINER Jorge Andrada <jandradap@gmail.com>
 
-RUN apt-get update && apt-get install -y unzip \
-										 apt-utils \
-										 apache2 \
-										 libapache2-mod-php \
-										 libapache2-mod-php7.0 \
-										 php7.0 \
-										 php7.0-cli \
-										 php7.0-json \
-										 php-curl \
-										 redis-server \
-										 php-redis \
-										 supervisor
+RUN apt-get update 
+RUN apt-get install -y unzip \
+	apt-utils \
+	apache2 \
+	libapache2-mod-php \
+	libapache2-mod-php7.0 \
+	php7.0 \
+	php7.0-cli \
+	php7.0-json \
+	php-curl \
+	jq \
+	php-redis \
+	supervisor \
+	redis-server
 
 #borro descargas
 RUN rm -rf /var/lib/apt/lists/*
@@ -26,6 +28,10 @@ COPY index.php /var/www/html/index.php
 #Copio la configuracion del supervisord
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
+
+#Copiamos el script para interactuar con redis desde bash
+COPY redi.sh /usr/local/sbin/redi
+chmod +x /usr/local/sbin/redi
 
 #exponemos puertos
 EXPOSE 6379
