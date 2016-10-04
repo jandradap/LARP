@@ -4,6 +4,7 @@ MAINTAINER Jorge Andrada <jandradap@gmail.com>
 RUN apt-get update 
 RUN apt-get install -y unzip \
 	apt-utils \
+	curl \
 	apache2 \
 	libapache2-mod-php \
 	libapache2-mod-php7.0 \
