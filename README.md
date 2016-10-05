@@ -4,7 +4,7 @@
 
 ### Uso
 	docker pull jorgeandrada/larp
-	docker run --name=proxmox_info -p 8080:80  -h proxmox_redis -d jorgeandrada/larp
+	docker run --name=proxmox_info -p 8080:80  -h proxmoxredis -d jorgeandrada/larp
 	docker exec -it proxmox_info /bin/bash
 
 ### Uso con volumen
