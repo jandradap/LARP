@@ -1,7 +1,7 @@
 FROM ubuntu
 MAINTAINER Jorge Andrada <jandradap@gmail.com>
 
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get install -y unzip \
 	apt-utils \
 	curl \
@@ -30,9 +30,9 @@ COPY index.php /var/www/html/index.php
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
 
-#Copiamos el script para interactuar con redis desde bash
-COPY redi.sh /usr/local/sbin/redi
-RUN chmod +x /usr/local/sbin/redi
+# #Copiamos el script para interactuar con redis desde bash
+# COPY redi.sh /usr/local/sbin/redi
+# RUN chmod +x /usr/local/sbin/redi
 
 #exponemos puertos
 EXPOSE 6379
