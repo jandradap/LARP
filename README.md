@@ -1,6 +1,6 @@
 # LARP
 #### **LARP: Linux, Apache, Redis, PHP.**
-
+[![](https://images.microbadger.com/badges/version/jorgeandrada/larp.svg)](https://microbadger.com/images/jorgeandrada/larp "Get your own version badge on microbadger.com")[![](https://images.microbadger.com/badges/image/jorgeandrada/larp.svg)](https://microbadger.com/images/jorgeandrada/larp "Get your own image badge on microbadger.com")
 
 ### Uso
 	docker pull jorgeandrada/larp
