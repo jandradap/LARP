@@ -44,7 +44,7 @@ COPY index.php /var/www/html/index.php
 #Personalizamos redis
 COPY redis.conf /etc/redis/
 RUN chown root:root /etc/redis/redis.conf && \
-	chmod 640 /etc/redis/redis.conf && \
+	chmod 644 /etc/redis/redis.conf && \
 	mkdir -p /var/lib/redis
 
 #exponemos puertos
