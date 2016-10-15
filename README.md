@@ -25,3 +25,7 @@
 ### Backup BD
 
 	La base de datos está localizada en /var/lib/redis/dump.rdb
+
+### Versionado:
+
+- **v0.9:** añadida la última versión de redis-server.

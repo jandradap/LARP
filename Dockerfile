@@ -1,8 +1,8 @@
-FROM ubuntu
+FROM ubuntu:latest
 MAINTAINER Jorge Andrada <jandradap@gmail.com>
 
-RUN apt-get update
-RUN apt-get install -y unzip \
+RUN apt-get update && \
+	apt-get install -y unzip \
 	apt-utils \
 	curl \
 	apache2 \
@@ -15,24 +15,37 @@ RUN apt-get install -y unzip \
 	jq \
 	php-redis \
 	supervisor \
-	redis-server
+	wget \
+	gcc \
+	libc6-dev \
+	make \
+ && rm -rf /var/lib/apt/lists/* \
+ &&	rm -rf /var/cache/apt/archives/*
 
-#borro descargas
-RUN rm -rf /var/lib/apt/lists/*
-RUN rm -rf /var/cache/apt/archives/*
+#instalo la última versión de redis
+RUN cd /tmp && \
+	wget http://download.redis.io/releases/redis-3.2.4.tar.gz && \
+ 	tar -xzf redis-3.2.4.tar.gz && \
+ 	make -C /tmp/redis-3.2.4/ && \
+ 	make -C /tmp/redis-3.2.4/ install
 
 #Personalizamos apache2
-RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/supervisor
+RUN mkdir -p /var/lock/apache2 /var/run/apache2
+ENV APACHE_RUN_USER	www-data
+ENV APACHE_RUN_GROUP	www-data
+ENV APACHE_LOG_DIR	/var/log/apache2
+ENV APACHE_PID_FILE	/var/run/apache2.pid
+ENV APACHE_RUN_DIR	/var/run/apache2
+ENV APACHE_LOCK_DIR	/var/lock/apache2
+ENV APACHE_LOG_DIR	/var/log/apache2
 RUN rm -rf /var/www/html/index.html
 COPY index.php /var/www/html/index.php
 
-#Copio la configuracion del supervisord
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
-
-# #Copiamos el script para interactuar con redis desde bash
-# COPY redi.sh /usr/local/sbin/redi
-# RUN chmod +x /usr/local/sbin/redi
+#Personalizamos redis
+COPY redis.conf /etc/redis/
+RUN chown root:root /etc/redis/redis.conf && \
+	chmod 640 /etc/redis/redis.conf && \
+	mkdir -p /var/lib/redis
 
 #exponemos puertos
 EXPOSE 6379
@@ -41,5 +54,18 @@ EXPOSE 80
 #directorio de trabajo por defecto
 WORKDIR /var/www/html/
 
-#Ejecuto el supervisor
+# #Ejecuto el supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
+
+#labels
+LABEL org.label-schema.build-date=$BUILD_DATE \
+			org.label-schema.name="LARP" \
+			org.label-schema.description="LARP: Linux, Apache, Redis, PHP." \
+			org.label-schema.url="https://github.com/jandradap/LARP" \
+			org.label-schema.vcs-ref=$VCS_REF \
+			org.label-schema.vcs-url="https://github.com/jandradap/LARP" \
+			org.label-schema.vendor="Jorge Andrada" \
+			org.label-schema.version=$VERSION \
+			org.label-schema.schema-version="0.9"
