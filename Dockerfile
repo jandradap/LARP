@@ -28,7 +28,8 @@ RUN cd /tmp && \
 	wget http://download.redis.io/releases/redis-3.2.4.tar.gz && \
  	tar -xzf redis-3.2.4.tar.gz && \
  	make -C /tmp/redis-3.2.4/ && \
- 	make -C /tmp/redis-3.2.4/ install
+ 	make -C /tmp/redis-3.2.4/ install && \
+	rm -rf /tmp/*
 
 #Personalizamos apache2
 RUN mkdir -p /var/lock/apache2 /var/run/apache2
@@ -69,4 +70,4 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 			org.label-schema.vcs-url="https://github.com/jandradap/LARP" \
 			org.label-schema.vendor="Jorge Andrada" \
 			org.label-schema.version=$VERSION \
-			org.label-schema.schema-version="0.9"
+			org.label-schema.schema-version="1.0"
