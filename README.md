@@ -28,4 +28,5 @@
 
 ### Versionado:
 
+- **v1.0:** añadido cron para la ejecución de tareas programadas.
 - **v0.9:** añadida la última versión de redis-server.
