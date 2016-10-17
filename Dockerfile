@@ -5,6 +5,7 @@ RUN apt-get update && \
 	apt-get install -y unzip \
 	apt-utils \
 	curl \
+	cron \
 	apache2 \
 	libapache2-mod-php \
 	libapache2-mod-php7.0 \
