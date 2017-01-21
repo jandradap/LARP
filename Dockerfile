@@ -68,20 +68,9 @@ EXPOSE 6379
 EXPOSE 80
 
 #directorio de trabajo por defecto
-WORKDIR /var/www/html/
+WORKDIR /var/www/html
 
 # #Ejecuto el supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chown root:root /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
-
-#labels
-LABEL org.label-schema.build-date=$BUILD_DATE \
-			org.label-schema.name="LARP" \
-			org.label-schema.description="LARP: Linux, Apache, Redis, PHP." \
-			org.label-schema.url="https://github.com/jandradap/LARP" \
-			org.label-schema.vcs-ref=$VCS_REF \
-			org.label-schema.vcs-url="https://github.com/jandradap/LARP" \
-			org.label-schema.vendor="Jorge Andrada" \
-			org.label-schema.version=$VERSION \
-			org.label-schema.schema-version="1.0"
