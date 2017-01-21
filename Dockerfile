@@ -1,5 +1,19 @@
 FROM ubuntu:latest
-MAINTAINER Jorge Andrada <jandradap@gmail.com>
+
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+			org.label-schema.name="LARP" \
+			org.label-schema.description="LARP: Linux, Apache, Redis, PHP." \
+			org.label-schema.url="http://andradaprieto.es" \
+			org.label-schema.vcs-ref=$VCS_REF \
+			org.label-schema.vcs-url="https://github.com/jandradap/LARP" \
+			org.label-schema.vendor="Jorge Andrada Prieto" \
+			org.label-schema.version=$VERSION \
+			org.label-schema.schema-version="1.0" \
+			maintainer="Jorge Andrada Prieto <jandradap@gmail.com>" \
+			org.label-schema.docker.cmd="docker run --name=larp -p 8080:80  -h larp -d jorgeandrada/larp"
 
 RUN apt-get update && \
 	apt-get install -y unzip \
